@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 
-from .models import *
+from .models import Library, Book, Author, Libarian
 
 
 def home(request):
