@@ -10,7 +10,7 @@ def home(request):
 
 def book_list(request):
     books = Book.objects.all()
-    return render(request, "relationship_app/list_book.html", {"books": books})
+    return render(request, "relationship_app/list_books.html", {"books": books})
 
 def book_detail(request, pk):
     book = Book.objects.get(pk=pk)
