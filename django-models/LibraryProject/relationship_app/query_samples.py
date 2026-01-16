@@ -12,7 +12,8 @@ def query_books_by_author(author_name):
     """
     Query all books by a specific author
     """
-    return Book.objects.filter(author__name=author_name)
+    author = Author.objects.get(name=author_name)
+    return Book.objects.filter(author=author)
 
 # List all books in a specific library
 def list_books_in_library(library_name):
