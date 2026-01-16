@@ -8,7 +8,7 @@ from .models import Library, Book, Author, Libarian
 def home(request):
     return render(request, "relationship_app/home.html")
 
-def book_list(request):
+def list_book(request):
     books = Book.objects.all()
     return render(request, "relationship_app/list_books.html", {"books": books})
 

@@ -1,4 +1,4 @@
-from .views import home, book_list, book_detail, LibraryDetailView
+from .views import home, list_book, book_detail, LibraryDetailView
 from django.urls import path
 
 
