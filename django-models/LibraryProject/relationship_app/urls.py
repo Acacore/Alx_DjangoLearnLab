@@ -2,6 +2,7 @@ from .views import list_books
 from .views import home, book_detail, LibraryDetailView,register, DashboardView,HomeView
 from .views import LoginView, LogoutView
 from django.urls import path
+from . import views
 
 
 urlpatterns = [
@@ -13,7 +14,7 @@ urlpatterns = [
     # Authentication
     path('', HomeView.as_view(), name='home'),
   
-    path("register/", register, name="register"),
+    path("register/", views.register, name="register"),
     path("login/", LoginView.as_view(template_name="login.html"),  name="login"),
     path("logout/", LogoutView.as_view(template_name="logout.html"), name="logout"),
 ]
