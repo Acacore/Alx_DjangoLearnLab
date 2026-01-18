@@ -14,6 +14,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from relationship_app.utils import is_admin, is_librarian, is_member
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import permission_required
+
 
 
 def register(request):
@@ -76,3 +78,29 @@ class LibraryDetailView(DetailView):
         context["now"] = timezone.now()
         return context
 
+
+
+@permission_required(
+    "relationship_app.can_add_book",
+    raise_exception=True
+)
+def add_book(request):
+    ...
+
+
+
+@permission_required(
+    "relationship_app.can_change_book",
+    raise_exception=True
+)
+def edit_book(request, pk):
+    ...
+
+
+
+@permission_required(
+    "relationship_app.can_delete_book",
+    raise_exception=True
+)
+def delete_book(request, pk):
+    ...
