@@ -14,7 +14,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 
 
-class UserLoginView(LoginView):
+class LoginView(LoginView):
     template_name = 'relationship_app/login.html'
 
 
@@ -22,7 +22,7 @@ class UserLogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
 
 
-class UserRegisterView(CreateView):
+class RegisterView(CreateView):
     form_class = UserCreationForm
     template_name = 'relationship_app/register.html'
     success_url = reverse_lazy('relationship_app/login')
