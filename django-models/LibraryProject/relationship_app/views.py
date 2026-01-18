@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic.detail import DetailView
-
+from django.contrib.auth.decorators import user_passes_test
 from .models import Library, Book, Author, Librarian
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
+from relationship_app.utils import is_admin, is_librarian, is_member
 
 
 def register(request):
@@ -69,4 +70,4 @@ class LibraryDetailView(DetailView):
         context["books"] = library.books.all()  # Add all books in this library
         context["now"] = timezone.now()
         return context
-# Create your views here.
+
