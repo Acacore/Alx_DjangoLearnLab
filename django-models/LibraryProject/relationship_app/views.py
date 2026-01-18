@@ -2,47 +2,48 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 
-from .models import Library, Book, Author, Libarian
+from .models import Library, Book, Author, Librarian
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
+from django.contrib.auth.views import LoginView, LogoutView
 
-# Registration view
-def register_view(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)  # log the user in after registration
-            messages.success(request, "Registration successful.")
-            return redirect("relationship_app-home")
-        else:
-            messages.error(request, "Unsuccessful registration. Invalid information.")
-    else:
-        form = UserCreationForm()
-    return render(request, "relationship_app/register.html", {"form": form})
 
-# Login view
-def login_view(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            messages.success(request, f"Welcome {user.username}!")
-            return redirect("relationship_app-home")
-        else:
-            messages.error(request, "Invalid username or password.")
-    else:
-        form = AuthenticationForm()
-    return render(request, "relationship_app/login.html", {"form": form})
+class UserLoginView(LoginView):
+    template_name = 'relationship_app/login.html'
 
-# Logout view
-def logout_view(request):
-    logout(request)
-    messages.info(request, "You have successfully logged out.")
-    return redirect("relationship_app-home")
+
+class UserLogoutView(LogoutView):
+    template_name = 'relationship_app/logout.html'
+
+
+class UserRegisterView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'relationship_app/register.html'
+    success_url = reverse_lazy('relationship_app/login')
+
+
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'relationship_app/signup.html'
+    
+
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'relationship_app/home.html'
+
+
+
+
+
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'relationship_app/dashboard.html'
 
 
 
