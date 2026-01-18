@@ -14,25 +14,23 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 
 
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+    else:
+        form = UserCreationForm()
+    return render(request, "register.html", {"form": form})
+
+
 class LoginView(LoginView):
-    template_name = 'relationship_app/login.html'
+    template_name = "login.html"
 
 
-class UserLogoutView(LogoutView):
-    template_name = 'relationship_app/logout.html'
-
-
-class RegisterView(CreateView):
-    form_class = UserCreationForm
-    template_name = 'relationship_app/register.html'
-    success_url = reverse_lazy('relationship_app/login')
-
-
-class SignUpView(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'relationship_app/signup.html'
-    
+class LogoutView(LogoutView):
+    template_name = "logout.html"    
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'relationship_app/home.html'
