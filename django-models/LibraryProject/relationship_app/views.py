@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from relationship_app.utils import is_admin, is_librarian, is_member
+from django.contrib.auth.views import LoginView
 
 
 def register(request):
@@ -39,6 +40,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
 
 
+
+
+class CustomLoginView(LoginView):
+    template_name = "relationship_app/login.html"
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

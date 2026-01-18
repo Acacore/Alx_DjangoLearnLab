@@ -6,6 +6,7 @@ from .admin_view import admin_dashboard
 from .librarian_view import librarian_dashboard
 from .member_view import member_dashboard
 from . import views
+from .views import CustomLoginView
 
 
 urlpatterns = [
@@ -18,7 +19,8 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
   
     path("register/", views.register, name="register"),
-    path("login/", LoginView.as_view(template_name="login.html"),  name="login"),
+    # path("login/", LoginView.as_view(template_name="login.html"),  name="login"),
+    path("login/", CustomLoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(template_name="logout.html"), name="logout"),
 
     path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
