@@ -157,6 +157,8 @@ SESSION_COOKIE_HTTPONLY = True
 
 # HTTPS settings
 SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 # Optional: Strict Transport Security
 SECURE_HSTS_SECONDS = 31536000  # 1 year
@@ -169,3 +171,14 @@ SECURE_HSTS_PRELOAD = True
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com')
 CSP_SCRIPT_SRC = ("'self'", 'ajax.googleapis.com')
+
+# Clickjacking protection
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevent MIME type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable browser XSS protection
+SECURE_BROWSER_XSS_FILTER = True
+
+
