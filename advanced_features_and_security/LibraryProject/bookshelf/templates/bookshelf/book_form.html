@@ -1,6 +1,11 @@
-{% extends "base.html" %}  
+
+{% extends "base.html" %}
+<!-- bookshelf/templates/bookshelf/book_form.html -->
+<h2>Create / Edit Book</h2>
+
 <form method="post" action="{% url 'create_book' %}">
     {% csrf_token %}
-    <!-- form fields -->
+    {{ form.as_p }}
     <input type="submit" value="Submit">
 </form>
+<a href="{% url 'book_list' %}">Back to Book List</a>

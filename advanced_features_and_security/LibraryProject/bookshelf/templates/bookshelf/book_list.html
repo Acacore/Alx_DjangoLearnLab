@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+<h2>Book List</h2>
+
+<!-- bookshelf/templates/bookshelf/book_list.html -->
+<h2>Book List</h2>
+
+<ul>
+  {% for book in books %}
+    <li>{{ book.title }} by {{ book.author }} ({{ book.publication_year }})</li>
+  {% empty %}
+    <li>No books found.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'create_book' %}">Add a New Book</a>
+
