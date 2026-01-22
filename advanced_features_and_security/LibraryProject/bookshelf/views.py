@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
 from .models import Book
-from .forms import BookForm
+from .forms import BookForm, ExampleForm
 from django.db.models import Q
 
 # View to create a book
@@ -35,15 +35,6 @@ def delete_book(request, pk):
         return redirect('book_list')
     return render(request, 'bookshelf/book_confirm_delete.html', {'book': book})
 
-# View to view books
-@permission_required('bookshelf.can_view', raise_exception=True)
-def list_books(request):
-    books = Book.objects.all()
-    return render(request, 'bookshelf/book_list.html', {'books': books})
-
-
-
-
 
 def search_books(request):
     query = request.GET.get('q', '')
@@ -51,3 +42,30 @@ def search_books(request):
         Q(title__icontains=query) | Q(author__icontains=query)
     )
     return render(request, 'bookshelf/book_list.html', {'books': books})
+
+
+
+# View for listing all books
+def book_list(request):
+    # Use only() to fetch only needed fields
+    books = Book.objects.only('title', 'author', 'publication_year')
+    return render(request, 'bookshelf/book_list.html', {'books': books})
+
+
+# View for creating a new book
+@permission_required('bookshelf.can_create', raise_exception=True)
+def create_book(request):
+    form = BookForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('book_list')
+    return render(request, 'bookshelf/book_form.html', {'form': form})
+
+
+
+# ALX expects this example form view
+def example_form_view(request):
+    form = ExampleForm(request.POST or None)
+    if form.is_valid():
+        return redirect('example_form')
+    return render(request, 'bookshelf/form_example.html', {'form': form})
