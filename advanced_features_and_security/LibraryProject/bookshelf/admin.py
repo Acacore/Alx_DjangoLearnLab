@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Book
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import CustomUser
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
@@ -19,10 +19,10 @@ class BookAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(User)
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    model = User
-    
+    model = CustomUser
+
     fieldsets = UserAdmin.fieldsets + (
         ("Additional Information", {
             "fields": ("date_of_birth", "profile_photo"),

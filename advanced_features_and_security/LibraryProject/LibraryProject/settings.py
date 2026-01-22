@@ -128,17 +128,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = 'login/'
+LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/login/'
 
-AUTH_USER_MODEL = 'bookshelf.User'
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
-
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
