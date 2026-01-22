@@ -1,0 +1,6 @@
+{% extends "base.html" %}  
+<form method="post" action="{% url 'create_book' %}">
+    {% csrf_token %}
+    <!-- form fields -->
+    <input type="submit" value="Submit">
+</form>
