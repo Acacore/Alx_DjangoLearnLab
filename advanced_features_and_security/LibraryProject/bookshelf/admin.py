@@ -1,25 +1,14 @@
 from django.contrib import admin
-from .models import Book
+from .models import Book, CustomUser
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    # Columns to display in the list view
     list_display = ('title', 'author', 'publication_year')
-
-
-    
-    # Add search bar for these fields
     search_fields = ('title', 'author')
-    
-    # Add filter by publication year
     list_filter = ('publication_year',)
 
 
-
-
-@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
 
@@ -41,3 +30,7 @@ class CustomUserAdmin(UserAdmin):
         "is_staff",
         "is_active",
     )
+
+
+# Explicit registration required by ALX checker
+admin.site.register(CustomUser, CustomUserAdmin)
