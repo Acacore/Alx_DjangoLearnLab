@@ -1,0 +1,4 @@
+Django
+django-silk
+djangorestframework
+python-dotenv
