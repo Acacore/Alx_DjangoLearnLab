@@ -1,4 +1,10 @@
 Django
-django-silk
 djangorestframework
+django-filter
+dj-database-url
+gunicorn
+whitenoise
+python-decouple
+psycopg2-binary
 python-dotenv
+django-silk
