@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
 from rest_framework.routers import DefaultRouter
 
@@ -8,6 +8,6 @@ router.register(r'books', BookViewSet, basename='book')
 
 
 urlpatterns = [
-    path("", home, name="home"),
+    path('', include(router.urls)),
     path('books/', BookList.as_view(), name='book-list'),  # Maps to the BookList view
 ]
