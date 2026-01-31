@@ -134,15 +134,18 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
+
 REST_FRAMEWORK = {
+    # Permissions: public read, authenticated writes
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
+
+    # Authentication: Session + Token
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
-    ]
+        "rest_framework.authentication.TokenAuthentication",
+    ],
 }
-
 
 SILK_META_KEY = 'silk_meta'
