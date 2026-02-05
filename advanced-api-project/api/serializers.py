@@ -11,7 +11,8 @@ class AuthorSerializer(serializers.ModelSerializer):
     and vice versa. It also includes a nested representation
     of books written by the author.
     """
-    
+    books = serializers.StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Author
         fields = '__all__'
