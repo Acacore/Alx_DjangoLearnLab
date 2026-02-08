@@ -5,9 +5,10 @@ from rest_framework import viewsets
 from .models import Author, Book
 from .serializers import AuthorSerializer, BookSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework import generics
+from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import BookFilter
+import django_filters
 
 class AuthorViewSet(viewsets.ModelViewSet):
     
@@ -22,7 +23,14 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
-    filterset_class = BookFilter
+    # filterset_class = BookFilter
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.OrderingFilter,
+    ]
+    filterset_fields = ['title', 'author', 'publication_year']
+    ordering_fields = ['title', 'publication_year']
+    ordering = ['title']  # default ordering
 
 
 class BookDetailView(generics.RetrieveAPIView):
