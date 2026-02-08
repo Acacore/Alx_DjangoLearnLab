@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 from django.contrib.auth.models import User
 from .models import Author, Book
+from datetime import date
+
 
 
 
@@ -10,16 +12,21 @@ class BookAPITestCase(APITestCase):
 
     def setUp(self):
         """
-        Set up test data and authenticated user.
+        Set up test user and initial data.
         """
         self.client = APIClient()
 
-        # Create user for authentication
+        # Create user
         self.user = User.objects.create_user(
             username='testuser',
             password='testpassword'
         )
-        self.client.force_authenticate(user=self.user)
+
+        # Login user (REQUIRED)
+        self.client.login(
+            username='testuser',
+            password='testpassword'
+        )
 
         # Create author
         self.author = Author.objects.create(name='George Orwell')
@@ -27,15 +34,15 @@ class BookAPITestCase(APITestCase):
         # Create books
         self.book1 = Book.objects.create(
             title='Animal Farm',
-            publication_year=1945,
-            author=self.author
-        )
-        self.book2 = Book.objects.create(
-            title='1984',
-            publication_year=1949,
+            publication_year=date(1945, 1, 1),
             author=self.author
         )
 
+        self.book2 = Book.objects.create(
+            title='1984',
+            publication_year=date(1948, 1, 1),
+            author=self.author
+        )
 
     def test_list_books(self):
         """
@@ -52,7 +59,7 @@ class BookAPITestCase(APITestCase):
         """
         data = {
             'title': 'Homage to Catalonia',
-            'publication_year': 1938,
+            'publication_year': date(1947, 1, 1),
             'author': self.author.id
         }
         response = self.client.post('/books/create/', data)
@@ -76,7 +83,7 @@ class BookAPITestCase(APITestCase):
         """
         data = {
             'title': 'Animal Farm (Updated)',
-            'publication_year': 1945,
+            'publication_year': date(1945, 1, 1),
             'author': self.author.id
         }
         response = self.client.put(f'/books/{self.book1.id}/update/', data)
