@@ -90,6 +90,17 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'django_blog',
+    #     'USER': 'postgres',       # <== required
+    #     'PASSWORD': 'mypassword', # <== required
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',           # <== required
+    # }
+
+
 }
 
 
@@ -129,6 +140,11 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-LOGIN_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'profile'
