@@ -1,8 +1,25 @@
 {% extends "blog/base.html" %}
-{% block context %}
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Comment</button>
-</form>
+
+{% block content %}
+  <div class="container">
+    <h2>
+      {% if object %}
+        Edit Comment
+      {% else %}
+        Add Comment
+      {% endif %}
+    </h2>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">
+        {% if object %}
+          Update
+        {% else %}
+          Post Comment
+        {% endif %}
+      </button>
+    </form>
+  </div>
 {% endblock %}

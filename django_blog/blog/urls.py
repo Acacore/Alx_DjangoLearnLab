@@ -16,7 +16,9 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name='blog/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path("post/<int:pk>/comment/", CommentView.as_view(), name="add-comment"),
+    path("posts/<int:pk>/comments/new/", CommentCreateView.as_view(), name="comment-create"),
+    path("comments/<int:pk>/edit/",CommentUpdateView.as_view(),name="comment-update"),
+    path("comments/<int:pk>/delete/",CommentDeleteView.as_view(),name="comment-delete"),
 ]
 
 if settings.DEBUG:
