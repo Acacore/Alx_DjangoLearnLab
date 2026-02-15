@@ -34,4 +34,19 @@
   <p><a href="{% url 'login' %}">Login</a> to add a comment.</p>
 {% endif %}
 
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h2>Search Results</h2>
+
+{% for post in posts %}
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content|truncatewords:20 }}</p>
+{% empty %}
+    <p>No posts found.</p>
+{% endfor %}
+
+{% endblock %}
+
 {% endblock %}
