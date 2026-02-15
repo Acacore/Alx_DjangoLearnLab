@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -10,7 +11,7 @@ from django.views.generic import (
     DeleteView
 )
 from django.urls import reverse_lazy
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm
 
 
@@ -84,3 +85,12 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
+
+class  CommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    fields = ["content"]
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author
