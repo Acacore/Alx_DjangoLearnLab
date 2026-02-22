@@ -12,13 +12,6 @@ from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from notifications.models import Notification
 
-    
-
-
-
-from .models import Post, Like
-from notifications.models import Notification
-
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -46,16 +39,10 @@ class LikePostView(APIView):
     def post(self, request, pk):
         post = generics.get_object_or_404(Post, pk=pk)
 
-        like, created = Like.objects.get_or_create(
-            user=request.user,
-            post=post
-        )
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
 
         if not created:
-            return Response(
-                {"detail": "Already liked"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"detail": "Already liked"}, status=status.HTTP_400_BAD_REQUEST)
 
         if post.author != request.user:
             Notification.objects.create(
@@ -66,8 +53,7 @@ class LikePostView(APIView):
                 object_id=post.id
             )
 
-        return Response({"detail": "Post liked"}, status=201)
-
+        return Response({"detail": "Post liked"}, status=status.HTTP_201_CREATED)
 class UnlikePostView(APIView):
     permission_classes = [IsAuthenticated]
 
