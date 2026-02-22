@@ -133,3 +133,27 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 AUTH_USER_MODEL = "accounts.User"
+
+
+DEBUG = False
+ALLOWED_HOSTS = ['your-domain.com', 'your-app.herokuapp.com']  # add all production hosts
+
+# Security settings
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True  # redirect HTTP to HTTPS
+
+# Use environment variables for sensitive data
+import os
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'replace-this-for-local-testing')
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # add this
+    ...
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
